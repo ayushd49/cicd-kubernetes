@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-app
+  namespace: ${NAMESPACE}       # replaced by Jenkins at runtime
+  labels:
+    app: python-app
+    branch: ${BRANCH_NAME}
+spec:
+  replicas: 2                   # one pod per node
+  selector:
+    matchLabels:
+      app: python-app
+  template:
+    metadata:
+      labels:
+        app: python-app
+    spec:
+      topologySpreadConstraints:  # spread pods across both nodes
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: python-app
+      containers:
+        - name: python-app
+          image: ${DOCKER_IMAGE}  # replaced by Jenkins at runtime
+          ports:
+            - containerPort: 5000
+          env:
+            - name: APP_ENV
+              value: "${BRANCH_NAME}"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "250m"
