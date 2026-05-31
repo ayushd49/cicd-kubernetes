@@ -31,7 +31,14 @@ pipeline {
 
     stages {
 
-        
+        stage('Debug Params') {
+            steps {
+                sh """
+                    echo "BRANCH_NAME = ${params.BRANCH_NAME}"
+                    echo "ACTION = ${params.ACTION}"
+                """
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout([
