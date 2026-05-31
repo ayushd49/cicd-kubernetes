@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-app
-  namespace: ${NAMESPACE}
+  namespace: NAMESPACE_PLACEHOLDER
   labels:
     app: python-app
     branch: ${BRANCH_NAME}
@@ -18,12 +18,12 @@ spec:
     spec:
       containers:
         - name: python-app
-          image: ${DOCKER_IMAGE}
+          image: IMAGE_PLACEHOLDER
           ports:
             - containerPort: 5000
           env:
             - name: APP_ENV
-              value: "${BRANCH_NAME}"
+              value: "BRANCH_PLACEHOLDER"
           readinessProbe:
             httpGet:
               path: /health
