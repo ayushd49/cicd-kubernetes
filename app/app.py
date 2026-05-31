@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     env = os.environ.get('APP_ENV', 'development')
-    return f"<h1>Hello from Python App!</h1><p>Environment: {env}</p>"
+    return f"<h1>Hello from Python App!</h1><p>Environment: {env} -- commit 1</p>"
 
 @app.route('/health')
 def health():
