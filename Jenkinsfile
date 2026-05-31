@@ -36,6 +36,14 @@ pipeline {
                 sh """
                     echo "BRANCH_NAME = ${params.BRANCH_NAME}"
                     echo "ACTION = ${params.ACTION}"
+                    echo "GCP_PROJECT = ${GCP_PROJECT}"
+                    echo "GCP_REGION = ${GCP_REGION}"
+                    echo "CLUSTER_NAME = ${CLUSTER_NAME}"
+                    echo "REGISTRY = ${REGISTRY}"
+                    echo "IMAGE_NAME = ${IMAGE_NAME}"
+                    echo "IMAGE_TAG = ${IMAGE_TAG}"
+                    echo "DOCKER_IMAGE = ${DOCKER_IMAGE}"
+                    echo "NAMESPACE = ${NAMESPACE}"
                 """
             }
         }
