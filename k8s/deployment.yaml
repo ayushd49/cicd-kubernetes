@@ -5,7 +5,7 @@ metadata:
   namespace: NAMESPACE_PLACEHOLDER
   labels:
     app: python-app
-    branch: ${BRANCH_NAME}
+    branch: BRANCH_PLACEHOLDER
 spec:
   replicas: 2
   selector:
