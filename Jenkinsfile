@@ -31,12 +31,18 @@ pipeline {
 
     stages {
 
+        
         stage('Checkout') {
             steps {
-                echo "Checking out branch: ${params.BRANCH_NAME}"
-                git branch: "${params.BRANCH_NAME}",
-                    url: 'https://github.com/ayushd49/cicd-kubernetes.git',  // ← replace
-                    credentialsId: 'github-creds'                       // ← Jenkins credential ID
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: "${params.BRANCH_NAME}"]],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/ayushd49/cicd-kubernetes.git',
+                        credentialsId: 'github-creds'
+                    ]]
+                ])
+                echo "Checked out branch: ${params.BRANCH_NAME}"
             }
         }
 
