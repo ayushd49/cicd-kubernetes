@@ -6,7 +6,7 @@ pipeline {
     parameters {
         string(
             name: 'BRANCH_NAME',
-            defaultValue: 'main',
+            defaultValue: 'master',
             description: 'Git branch to build and deploy'
         )
         choice(
@@ -25,8 +25,8 @@ pipeline {
         IMAGE_TAG    = "${params.BRANCH_NAME}-${BUILD_NUMBER}"
         DOCKER_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
 
-        // main branch deploys to production, all other branches deploy to staging
-        NAMESPACE    = "${params.BRANCH_NAME == 'main' ? 'production' : 'staging'}"
+        // master branch deploys to production, all other branches deploy to staging
+        NAMESPACE    = "${params.BRANCH_NAME == 'master' ? 'production' : 'staging'}"
     }
 
     stages {
